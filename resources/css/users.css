@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@source "../views";
+
+.users{
+  width:100%;
+}
+
+.block{
+  display:flex;
+}
+
+.key{
+  width:250px;
+}
+.value{
+  width:calc(100% - 250px);
+}

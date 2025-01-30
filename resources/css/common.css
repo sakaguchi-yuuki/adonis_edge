@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@source "../views";
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+h1{
+  @apply text-3xl mb-3 mt-6;
+}
+
+.pagination{
+  display:flex;
+  gap:15px;
+}

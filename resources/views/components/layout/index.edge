@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ tile || "SMP"}}</title>
+  @vite(['resources/js/app.js'])
+  @stack('dumper')
+  @if($slots.meta)
+  {{{ await $slots.meta()}}}
+  @end
+</head>
+
+<body>
+  <div class="max-w-3xl mx-auto mt-6">
+    @include('partials/header')
+    {{{ await $slots.main()}}}
+    @include('partials/footer')
+  </div>
+</body>
+</html>

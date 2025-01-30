@@ -1,0 +1,66 @@
+@layout({title:'home'})
+@slot('meta')
+<meta name="description" content="users.all">
+@endslot
+@slot('main')
+<h1>Employees</h1>
+@if(request.input('page') == 'all')
+<div>
+  <a href="./">
+    不在者非表示
+  </a>
+</div>
+@else
+<div>
+  <a href="./?page=all">
+    不在者表示
+  </a>
+</div>
+
+@end
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>NAME</th>
+    <th>STATUS</th>
+    <th>ACTION</th>
+  </tr>
+  @each(employee in employees)
+  <tr>
+    <td>
+      {{ employee.id }}
+    </td>
+    <td>
+      {{ employee.profile.fullName }}
+    </td>
+    <td>
+      @if(employee.status)
+      在職
+      @else
+      不在
+      @end
+    </td>
+    <td>
+      <a href="{{ route('employees.show',{id: employee.id}) }}">
+        確認
+      </a>
+      <a href="{{ route('employees.edit',{id: employee.id}) }}">
+        編集
+      </a>
+    </td>
+  </tr>
+  @end
+</table>
+<ul class="pagination">
+  @each(anchor in employees.getUrlsForRange(1, employees.lastPage))
+  <li>
+    <a href="/employees{{ anchor.url }}">
+      {{ anchor.page }}
+    </a>
+  </li>
+  @endeach
+</ul>
+{{ inspect(employees) }}
+@endslot
+@end
