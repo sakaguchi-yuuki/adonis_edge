@@ -1,0 +1,41 @@
+@layout({title:'home'})
+@slot('meta')
+<meta name="description" content="home">
+@endslot
+@slot('main')
+<h1>Login</h1>
+<form method="POST" action="{{route('auth.login.store')}}">
+  {{ csrfField() }}
+
+  @error('E_INVALID_CREDENTIALS')
+  <p role="alert">
+    {{$message}}
+  </p>
+  @end
+
+  <div>
+    @!form.input({
+    label : 'Email',
+    name: 'email',
+    type: 'email'
+    })
+  </div>
+  <div>
+    @!form.input({
+    label : 'Password',
+    name: 'password',
+    type:'password'
+    })
+  </div>
+  <div>
+    <label>
+      <input type="checkbox" name="isRememberMe" />
+      <span>Remember Me?</span>
+    </label>
+  </div>
+  <button type="submit">
+    Login
+  </button>
+</form>
+@endslot
+@end

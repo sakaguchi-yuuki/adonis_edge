@@ -1,3 +1,10 @@
+import NominationUnits from '#enums/nomination_units'
+import BottleBackUnit from '#models/bottle_back_unit'
+import NominationUnit from '#models/nomination_unit'
+import PaymentUnit from '#models/payment_unit'
+import Position from '#models/position'
+import Role from '#models/role'
+import Shop from '#models/shop'
 import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
@@ -41,7 +48,7 @@ export default class EmployeesController {
    * Show individual record
    */
   async show({ view, params }: HttpContext) {
-    const user = await User.query()
+    const employee = await User.query()
       .where('id', params.id) // `params.id` で取得
       .preload('profile', (query) => {
         query.preload('payment_unit').preload('nomination_unit').preload('bottle_back_unit')
@@ -51,14 +58,14 @@ export default class EmployeesController {
       .preload('position')
       .firstOrFail()
 
-    return view.render('pages/employees/show', { user })
+    return view.render('pages/employees/show', { employee })
   }
 
   /**
    * Edit individual record
    */
   async edit({ view, params }: HttpContext) {
-    const user = await User.query()
+    const employee = await User.query()
       .where('id', params.id) // `params.id` で取得
       .preload('profile', (query) => {
         query.preload('payment_unit').preload('nomination_unit').preload('bottle_back_unit')
@@ -68,7 +75,21 @@ export default class EmployeesController {
       .preload('position')
       .firstOrFail()
 
-    return view.render('pages/employees/edit', { user })
+    const shops = await Shop.query().orderBy('id', 'asc')
+    const roles = await Role.query().orderBy('id', 'asc')
+    const positions = await Position.query().orderBy('id', 'asc')
+    const paymentUnits = await PaymentUnit.query().orderBy('id', 'asc')
+    const nominationUnits = await NominationUnit.query().orderBy('id', 'asc')
+    const bottleBackUnits = await BottleBackUnit.query().orderBy('id', 'asc')
+    return view.render('pages/employees/edit', {
+      employee,
+      shops,
+      roles,
+      positions,
+      paymentUnits,
+      nominationUnits,
+      bottleBackUnits,
+    })
   }
 
   /**

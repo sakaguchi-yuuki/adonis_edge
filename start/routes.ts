@@ -7,21 +7,46 @@
 |
 */
 
-import app from '@adonisjs/core/services/app'
 import router from '@adonisjs/core/services/router'
-import fs from 'node:fs/promises'
-import UserService from '#services/user_service'
+import { middleware } from './kernel.js'
+const LogoutController = () => import('#controllers/auth/logout_controller')
+const HomeController = () => import('#controllers/home_controller')
+const LoginController = () => import('#controllers/auth/login_controller')
+const RegisterController = () => import('#controllers/auth/register_controller')
 const EmployeesController = () => import('#controllers/employees_controller')
-const UsersController = () => import('#controllers/users_controller')
 
-router
-  .get('/', async (ctx) => {
-    const url = app.makeURL('resources/users')
-    const slugs = await fs.readdir(url)
-    return ctx.view.render('pages/home', { slugs })
-  })
-  .as('home')
+router.get('/', [HomeController, 'index']).as('home')
 
 router.get('/employees', [EmployeesController, 'index']).as('employees.index')
 router.get('/employees/:id', [EmployeesController, 'show']).as('employees.show')
 router.get('/employees/edit/:id', [EmployeesController, 'edit']).as('employees.edit')
+
+router
+  .group(() => {
+    router
+      .get('/register', [RegisterController, 'show'])
+      .as('register.show')
+      .use(middleware.guest())
+    router
+      .post('/register', [RegisterController, 'store'])
+      .as('register.store')
+      .use(middleware.guest())
+    router.get('/login', [LoginController, 'show']).as('login.show').use(middleware.guest())
+    router.post('/login', [LoginController, 'store']).as('login.store').use(middleware.guest())
+
+    router.post('/logout', [LogoutController, 'handle']).as('logout').use(middleware.auth())
+  })
+  .prefix('/auth')
+  .as('auth')
+
+router
+  .group(() => {
+    router
+      .get('/', async (ctx) => {
+        return `You are here, ${ctx.auth.user?.id} as ${ctx.auth.user?.roleId} role`
+      })
+      .as('index')
+  })
+  .prefix('/admin')
+  .as('admin')
+  .use(middleware.admin())

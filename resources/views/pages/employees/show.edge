@@ -1,83 +1,89 @@
-@layout({title:'user'})
+@layout({title:'employee'})
 @slot('meta')
-<meta name="description" content="users.all">
+<meta name="description" content="employees.all">
 @endslot
 @slot('main')
-<h1>Users</h1>
-<div class="users">
+<h1>employees</h1>
+
+<div>
+  <a href="{{route('employees.edit',{id: employee.id})}}">
+    編集
+  </a>
+</div>
+<div class="employees">
   <div class="block">
     <div class="key">PHOTO</div>
     <div class="value">
-      @if(user.profile.avatarUrl)
-      <img src="{{ user.profile.avatarUrl }}" width="150" height="150">
+      @if(employee.profile.avatarUrl)
+      <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
       @else
-      <img src="{{ user.profile.avatarUrl }}" width="150" height="150">
+      <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
       @end
     </div>
   </div>
   <div class="block">
     <div class="key">ID</div>
-    <div class="value">{{user.id}}</div>
+    <div class="value">{{employee.id}}</div>
   </div>
   <div class="block">
     <div class="key">SHOP</div>
-    <div class="value">{{user.shop.name}}</div>
+    <div class="value">{{employee.shop.name}}</div>
   </div>
   <div class="block">
     <div class="key">ROLE</div>
-    <div class="value">{{user.role.name}}</div>
+    <div class="value">{{employee.role.name}}</div>
   </div>
   <div class="block">
     <div class="key">POSITION</div>
-    <div class="value">{{user.position.name}}</div>
+    <div class="value">{{employee.position.name}}</div>
   </div>
   <div class="block">
     <div class="key">Alias name</div>
-    <div class="value">{{user.profile.aliasName}}</div>
+    <div class="value">{{employee.profile.aliasName}}</div>
   </div>
   <div class="block">
     <div class="key">PHONE NUMBER</div>
-    <div class="value">{{user.profile.phoneNumber}}</div>
+    <div class="value">{{employee.profile.phoneNumber}}</div>
   </div>
   <div class="block">
     <div class="key">POSTAL CODE</div>
-    <div class="value">{{user.profile.postalCode}}</div>
+    <div class="value">{{employee.profile.postalCode}}</div>
   </div>
   <div class="block">
     <div class="key">ADDRESS</div>
     <div class="value">
-      {{user.profile.fullAddress}}
+      {{employee.profile.fullAddress}}
     </div>
   </div>
   <div class="block">
     <div class="key">PAYMENT</div>
     <div class="value">
-      {{user.profile.payment}}{{user.profile.payment_unit.name}}
+      {{employee.profile.payment}}{{employee.profile.payment_unit.name}}
     </div>
   </div>
   <div class="block">
     <div class="key">NOMINATION</div>
     <div class="value">
-      {{user.profile.nomination}}{{user.profile.nomination_unit.name}}
+      {{employee.profile.nomination}}{{employee.profile.nomination_unit.name}}
     </div>
   </div>
   <div class="block">
     <div class="key">BOTTLE BACK</div>
     <div class="value">
-      {{user.profile.bottleBack}}{{user.profile.bottle_back_unit.name}}
+      {{employee.profile.bottleBack}}{{employee.profile.bottle_back_unit.name}}
     </div>
   </div>
   <div class="block">
     <div class="key">ACCOUNT</div>
     <div class="value">
-      {{user.profile.account}}
+      {{employee.profile.account}}
     </div>
   </div>
   <div class="block">
     <div class="key">AGREEMENT</div>
     <div class="value">
-      @if(user.profile.agreementUrl)
-      <a href="{{user.profile.agreementUrl}}">
+      @if(employee.profile.agreementUrl)
+      <a href="{{employee.profile.agreementUrl}}">
         LINK
       </a>
       @end
@@ -86,7 +92,7 @@
   <div class="block">
     <div class="key">REMARKS</div>
     <div class="value">
-      {{user.profile.remarks}}
+      {{employee.profile.remarks}}
     </div>
   </div>
   @end

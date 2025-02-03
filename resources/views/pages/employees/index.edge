@@ -6,13 +6,13 @@
 <h1>Employees</h1>
 @if(request.input('page') == 'all')
 <div>
-  <a href="./">
+  <a href="{{route('employees.index')}}">
     不在者非表示
   </a>
 </div>
 @else
 <div>
-  <a href="./?page=all">
+  <a href="{{route('employees.index')}}?page=all">
     不在者表示
   </a>
 </div>

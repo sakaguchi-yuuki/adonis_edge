@@ -1,4 +1,15 @@
 <nav>
   <a href="{{route('home')}}">HOME</a>
   <a href="{{route('employees.index')}}">Employees</a>
+  @if(auth.user)
+  <form method="POST" action="{{route('auth.logout')}}">
+    {{csrfField()}}
+    <button type="submit">
+      Logout {{auth.user.id}}
+    </button>
+  </form>
+  @else
+  <a href="{{route('auth.login.show')}}">Login</a>
+  <a href="{{route('auth.register.show')}}">Register</a>
+  @end
 </nav>

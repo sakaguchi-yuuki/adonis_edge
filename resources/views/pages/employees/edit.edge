@@ -1,94 +1,203 @@
-@layout({title:'user'})
+@layout({title:'employee'})
 @slot('meta')
-<meta name="description" content="users.all">
+<meta name="description" content="employees.all">
 @endslot
 @slot('main')
-<h1>Users</h1>
-<div class="users">
-  <div class="block">
-    <div class="key">PHOTO</div>
-    <div class="value">
-      @if(user.profile.avatarUrl)
-      <img src="{{ user.profile.avatarUrl }}" width="150" height="150">
-      @else
-      <img src="{{ user.profile.avatarUrl }}" width="150" height="150">
-      @end
+<h1>employees</h1>
+<form action="" method="POST">
+  {{ csrfField() }}
+  <div class="employees">
+    <div class="block">
+      <div class="key">PHOTO</div>
+      <div class="value">
+        @if(employee.profile.avatarUrl)
+        <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
+        @else
+        <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
+        @end
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="key">ID</div>
+      <div class="value">
+        {{employee.id}}
+      </div>
+    </div>
+
+    @if(shops.length > 1)
+    <div class="block">
+      <div class="key">SHOP</div>
+      <div class="value">
+        <select name="shop">
+          @each(shop in shops)
+          <option value="{{shop.id}}" {{ shop.id==employee.shopId ? 'selected' : '' }}>{{ shop.name }}</option>
+          @end
+        </select>
+      </div>
+    </div>
+    @end
+
+    @if(roles.length > 1)
+    <div class="block">
+      <div class="key">ROLE</div>
+      <div class="value">
+        <select name="role">
+          @each(role in roles)
+          <option value="{{role.id}}" {{ role.id==employee.roleId ? 'selected' : '' }}>{{ role.name }}</option>
+          @end
+        </select>
+      </div>
+    </div>
+    @end
+
+    @if(positions.length > 1)
+    <div class="block">
+      <div class="key">POSITION</div>
+      <div class="value">
+        <select name="position">
+          @each(position in positions)
+          <option value="{{position.id}}" {{ position.id==employee.positinId ? 'selected' : '' }}>{{ position.name }}
+          </option>
+          @end
+        </select>
+      </div>
+    </div>
+    @else
+    <div class="block">
+      <div class="key">POSITION</div>
+      <div class="value">{{employee.position.name}}</div>
+    </div>
+    @end
+    <div class="block">
+      <div class="key">Name</div>
+      <div class="value_wrap">
+        <div class="value">
+          <input type="text" value="{{employee.profile.lastName}}" name="lastName">
+        </div>
+        <div class="value">
+          <input type="text" value="{{employee.profile.firstName}}" name="firstName">
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="key">Alias name</div>
+      <div class="value">
+        <input type="text" value="{{employee.profile.aliasName}}" name="aliasName">
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="key">PHONE NUMBER</div>
+      <div class="value">
+        <input type="text" value="{{employee.profile.phoneNumber}}" name="phoneNumber">
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">POSTAL CODE</div>
+      <div class="value">
+        <input type="text" value="{{employee.profile.postalCode}}" name="postalCode">
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">ADDRESS</div>
+      <div class="value_wrap">
+        <div class="value">
+          <input value="{{employee.profile.prefecture}}" name="prefecture">
+        </div>
+        <div class="value">
+          <input value="{{employee.profile.city}}" name="city">
+        </div>
+        <div class="value">
+          <input value="{{employee.profile.street}}" name="street">
+        </div>
+        <div class="value">
+          <input value="{{employee.profile.buildingName}}" name="buildingName">
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">PAYMENT</div>
+      <div class="value_wrap">
+        <div class="value">
+          <input value="{{employee.profile.payment}}" name="payment">
+        </div>
+        <div class="value">
+          <select name="paymentUnit">
+            @each(unit in paymentUnits)
+            <option value="{{unit.id}}" {{ unit.id==employee.profile.paymentUnit ? 'selected' : '' }}>
+              {{unit.name}}
+            </option>
+            @end
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">NOMINATION</div>
+      <div class="value_wrap">
+        <div class="value">
+          <input value="{{employee.profile.nomination}}" name="nomination">
+        </div>
+        <div class="value">
+          <select name="nominationUnit">
+            @each(unit in nominationUnits)
+            <option value="{{unit.id}}" {{ unit.id==employee.profile.nominationUnit ? 'selected' : '' }}>
+              {{unit.name}}
+            </option>
+            @end
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">BOTTLE BACK</div>
+      <div class="value_wrap">
+        <div class="value">
+          <input value="{{employee.profile.bottleBack}}" name="bottleBack">
+        </div>
+        <div class="value">
+          <select name="bottleBackUnit">
+            @each(unit in bottleBackUnits)
+            <option value="{{unit.id}}" {{ unit.id==employee.profile.bottleBackUnit ? 'selected' : '' }}>
+              {{unit.name}}
+            </option>
+            @end
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">ACCOUNT</div>
+      <div class="value">
+        <textarea name="account" id="">
+          {{employee.profile.account}}
+        </textarea>
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">AGREEMENT</div>
+      <div class="value">
+        @if(employee.profile.agreementUrl)
+        <a href="{{employee.profile.agreementUrl}}">
+          LINK
+        </a>
+        @end
+      </div>
+    </div>
+    <div class="block">
+      <div class="key">REMARKS</div>
+      <div class="value">
+        <textarea name="remarks" id="">
+          {{employee.profile.remarks}}
+        </textarea>
+      </div>
     </div>
   </div>
-  <div class="block">
-    <div class="key">ID</div>
-    <div class="value">{{user.id}}</div>
-  </div>
-  <div class="block">
-    <div class="key">SHOP</div>
-    <div class="value">{{user.shop.name}}</div>
-  </div>
-  <div class="block">
-    <div class="key">ROLE</div>
-    <div class="value">{{user.role.name}}</div>
-  </div>
-  <div class="block">
-    <div class="key">POSITION</div>
-    <div class="value">{{user.position.name}}</div>
-  </div>
-  <div class="block">
-    <div class="key">Alias name</div>
-    <div class="value">{{user.profile.aliasName}}</div>
-  </div>
-  <div class="block">
-    <div class="key">PHONE NUMBER</div>
-    <div class="value">{{user.profile.phoneNumber}}</div>
-  </div>
-  <div class="block">
-    <div class="key">POSTAL CODE</div>
-    <div class="value">{{user.profile.postalCode}}</div>
-  </div>
-  <div class="block">
-    <div class="key">ADDRESS</div>
-    <div class="value">
-      {{user.profile.fullAddress}}
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">PAYMENT</div>
-    <div class="value">
-      {{user.profile.payment}}{{user.profile.payment_unit.name}}
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">NOMINATION</div>
-    <div class="value">
-      {{user.profile.nomination}}{{user.profile.nomination_unit.name}}
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">BOTTLE BACK</div>
-    <div class="value">
-      {{user.profile.bottleBack}}{{user.profile.bottle_back_unit.name}}
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">ACCOUNT</div>
-    <div class="value">
-      {{user.profile.account}}
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">AGREEMENT</div>
-    <div class="value">
-      @if(user.profile.agreementUrl)
-      <a href="{{user.profile.agreementUrl}}">
-        LINK
-      </a>
-      @end
-    </div>
-  </div>
-  <div class="block">
-    <div class="key">REMARKS</div>
-    <div class="value">
-      {{user.profile.remarks}}
-    </div>
-  </div>
-  @end
-  @endslot
-  @end
+</form>
+@end
+@endslot
+@end
+
+{{ inspect(paymentUnits) }}

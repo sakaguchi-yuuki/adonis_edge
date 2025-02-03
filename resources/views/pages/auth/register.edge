@@ -1,0 +1,29 @@
+@layout({title:'home'})
+@slot('meta')
+<meta name="description" content="home">
+@endslot
+@slot('main')
+<h1>Register</h1>
+<form method="POST" action="{{route('auth.register.store')}}">
+  {{ csrfField() }}
+
+  <div>
+    @!form.input({
+    label : 'Email',
+    name: 'email',
+    type: 'email'
+    })
+  </div>
+  <div>
+    @!form.input({
+    label : 'Password',
+    name: 'password',
+    type:'password'
+    })
+  </div>
+  <button type="submit">
+    Register
+  </button>
+</form>
+@endslot
+@end
