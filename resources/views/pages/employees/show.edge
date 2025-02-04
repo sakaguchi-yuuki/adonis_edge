@@ -14,10 +14,9 @@
   <div class="block">
     <div class="key">PHOTO</div>
     <div class="value">
-      @if(employee.profile.avatarUrl)
-      <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
+      @if(employee?.profile?.avatarUrl)
+      <img src="{{ employee.profile?.avatarUrl }}" width="150" height="150">
       @else
-      <img src="{{ employee.profile.avatarUrl }}" width="150" height="150">
       @end
     </div>
   </div>

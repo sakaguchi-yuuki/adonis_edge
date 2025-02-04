@@ -13,10 +13,14 @@
 </head>
 
 <body>
-  <div class="max-w-3xl mx-auto mt-6">
+  <div class="wrap">
     @include('partials/header')
-    {{{ await $slots.main()}}}
+    <div>
+      @include('partials/side_bar')
+      {{{ await $slots.main()}}}
+    </div>
     @include('partials/footer')
   </div>
 </body>
+
 </html>

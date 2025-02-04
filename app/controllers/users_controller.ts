@@ -43,7 +43,11 @@ export default class UsersController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ params, request,response }: HttpContext) {
+
+  }
+
+  }
 
   /**
    * Delete record

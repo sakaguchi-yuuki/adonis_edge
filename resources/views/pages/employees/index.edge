@@ -3,7 +3,21 @@
 <meta name="description" content="users.all">
 @endslot
 @slot('main')
+
+
+<form method="GET" action="{{ route('employees.index') }}">
+  @!form.input({
+  lable: 'Name Search',
+  name: 'search',
+  type: 'search',
+  value: search
+  })
+  <button type="submit">Search</button>
+</form>
 <h1>Employees</h1>
+
+
+
 @if(request.input('page') == 'all')
 <div>
   <a href="{{route('employees.index')}}">
@@ -22,6 +36,7 @@
 <table>
   <tr>
     <th>ID</th>
+    <th>ALIAS NAME</th>
     <th>NAME</th>
     <th>STATUS</th>
     <th>ACTION</th>
@@ -32,7 +47,10 @@
       {{ employee.id }}
     </td>
     <td>
-      {{ employee.profile.fullName }}
+      {{ employee.profile?.aliasName }}
+    </td>
+    <td>
+      {{ employee.profile?.fullName }}
     </td>
     <td>
       @if(employee.status)
